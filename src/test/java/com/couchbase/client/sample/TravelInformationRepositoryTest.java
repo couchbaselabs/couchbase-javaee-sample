@@ -41,4 +41,11 @@ public class TravelInformationRepositoryTest {
 
 
     }
+
+    @Test
+    public void testFindAirportsForAirline() {
+//        System.out.println(travelRepository.findAirportsForAirline(" "));
+        System.out.println(travelRepository.findAirportsForAirline(""));
+        System.out.println(travelRepository.findAirportsForAirline("United"));
+    }
 }

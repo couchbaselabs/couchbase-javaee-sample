@@ -80,4 +80,10 @@ public class TravelInformationRepository {
 
     }
 
+
+    public List<Airport> findAirportsForAirline(String name) {
+        System.err.println("findAirportsForAirline called with: {" + name + "}");
+        return findAirports(findFirstAirlineByName(name));
+    }
+
 }
