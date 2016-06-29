@@ -8,12 +8,14 @@ import com.couchbase.client.java.query.*;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.List;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
 /**
  * Created by Matt Ingenthron on 6/26/16.
  */
-@Named
+@Named("travelRepo")
+@ApplicationScoped
 public class TravelInformationRepository {
 
     CouchbaseCluster cluster;

@@ -12,8 +12,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="JBoss Weld-2.0.3" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="JBoss 10.0.10.Final" level="application_server_libraries" />
+    <orderEntry type="library" scope="PROVIDED" name="JBoss Weld-2.0.3" level="project" />
     <orderEntry type="module-library" scope="TEST">
       <library name="JUnit4">
         <CLASSES>
@@ -27,5 +26,6 @@
     <orderEntry type="library" name="Maven: com.couchbase.client:java-client:2.3.1" level="project" />
     <orderEntry type="library" name="Maven: com.couchbase.client:core-io:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: io.reactivex:rxjava:1.1.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="JBoss 10.1.2.Final-redhat-1" level="application_server_libraries" />
   </component>
 </module>
