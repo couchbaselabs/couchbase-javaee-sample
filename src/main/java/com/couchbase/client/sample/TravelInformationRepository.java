@@ -7,7 +7,9 @@ import com.couchbase.client.java.query.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 
@@ -21,12 +23,20 @@ public class TravelInformationRepository {
     CouchbaseCluster cluster;
     Bucket bucket;
 
+    // TODO: remove this simple cache
+    // Note, the datatable in the JSF UI side seems to call this method a lot.  It's not clear why, but to workaround
+    // that for now, add a simple cache.
+    Map<String, List<Airport>> recentQueries;
+
     @PostConstruct
     public void buildClient() {
 //        cluster = CouchbaseCluster.create(System.getenv("COUCHBASE_URI"));
         cluster = CouchbaseCluster.create();
         bucket = cluster.openBucket("travel-sample");
+
+        recentQueries = new HashMap<String, List<Airport>>(10);
     }
+
 
     @PreDestroy
     public void stop() {
@@ -82,8 +92,16 @@ public class TravelInformationRepository {
 
 
     public List<Airport> findAirportsForAirline(String name) {
-        System.err.println("findAirportsForAirline called with: {" + name + "}");
-        return findAirports(findFirstAirlineByName(name));
+
+        List<Airport> result = recentQueries.get(name);
+
+        if (result == null) {
+            System.err.println("findAirportsForAirline called with: {" + name + "}");
+            result = findAirports(findFirstAirlineByName(name));
+            recentQueries.put(name, result);
+        }
+
+        return result;
     }
 
 }
