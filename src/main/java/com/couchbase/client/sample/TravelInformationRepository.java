@@ -57,16 +57,16 @@ public class TravelInformationRepository {
     public List<Airport> findAirports(Airline toFind) {
 //        N1qlQuery simpleQuery = N1qlQuery.simple(("SELECT meta().id AS id from `travel-sample` WHERE type = \"airport\" " +
 //                "AND name like \"" + name + "%\" ORDER BY name LIMIT 1"));
-        N1qlQuery simpleQuery = N1qlQuery.simple("select meta().id as id \n" +
-                "from `travel-sample` \n" +
-                "where \n" +
-                "type = \"airport\" and \n" +
-                "\n" +
-                "faa within  \n" +
-                "\n" +
-                "(select route.sourceairport, route.destinationairport\n" +
-                "from `travel-sample` route\n" +
-                "where route.type = \"route\"  and route.airlineid = \"" + toFind.getId() + "\")");
+        N1qlQuery simpleQuery = N1qlQuery.simple(
+                "select meta().id as id " +
+                "from `travel-sample` a " +
+                "where " +
+                "a.type = \"airport\" and " +
+                "a.faa within " +
+                        "(select raw [r.sourceairport, r.destinationairport] " +
+                        "from `travel-sample` r " +
+                        "where r.type = \"route\"  and r.airlineid = \"" + toFind.getId() + "\")");
+        System.err.println("Querying with " + simpleQuery.statement());
 
         return bucket.async()
                 .query(simpleQuery)
